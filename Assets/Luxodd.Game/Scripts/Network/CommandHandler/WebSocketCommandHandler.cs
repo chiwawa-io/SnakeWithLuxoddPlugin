@@ -21,8 +21,7 @@ namespace Luxodd.Game.Scripts.Network.CommandHandler
     {
         public ISimpleEvent<CommandProcessState> OnCommandProcessStateChangeEvent => _commandProcessStateChangeEvent;
 
-        [FormerlySerializedAs("_websocketService")] [SerializeField]
-        private WebSocketService _webSocketService;
+        [SerializeField] private WebSocketService _webSocketService;
 
         [SerializeField] private ErrorHandlerService _errorHandlerService;
 
@@ -41,7 +40,7 @@ namespace Luxodd.Game.Scripts.Network.CommandHandler
 
         public void SendUserBalanceRequestCommand(Action<float> onSuccessCallback, Action<int, string> onFailureCallback)
         {
-            if (CheckConnectionStatus(onFailureCallback) == false) return;
+            //if (CheckConnectionStatus(onFailureCallback) == false) return;
 
             var commandHandler = _commandHandlers[CommandRequestType.GetUserBalanceRequest];
             commandHandler.SendCommand(() =>
@@ -71,7 +70,7 @@ namespace Luxodd.Game.Scripts.Network.CommandHandler
 
         public void SendHealthCheckStatusCommand(Action onSuccessCallback, Action<int, string> onFailureCallback)
         {
-            if (CheckConnectionStatus(onFailureCallback) == false) return;
+            //if (CheckConnectionStatus(onFailureCallback) == false) return;
             
             var commandHandler = _commandHandlers[CommandRequestType.HealthStatusCheckRequest];
             commandHandler.SendCommand(() =>
@@ -81,7 +80,7 @@ namespace Luxodd.Game.Scripts.Network.CommandHandler
         public void SendLeaderboardRequestCommand(Action<LeaderboardDataResponse> onSuccessCallback,
             Action<int, string> onFailureCallback)
         {
-            if (CheckConnectionStatus(onFailureCallback) == false) return;
+            //if (CheckConnectionStatus(onFailureCallback) == false) return;
 
             var commandHandler = _commandHandlers[CommandRequestType.LeaderboardRequest];
             commandHandler.SendCommand(() =>
@@ -110,7 +109,7 @@ namespace Luxodd.Game.Scripts.Network.CommandHandler
         public void SendGetUserDataRequestCommand(Action<object> onSuccessCallback,
             Action<int, string> onFailureCallback)
         {
-            if (CheckConnectionStatus(onFailureCallback) == false) return;
+            //if (CheckConnectionStatus(onFailureCallback) == false) return;
             
             var commandHandler = _commandHandlers[CommandRequestType.GetUserDataRequest];
             commandHandler.SendCommand(() =>
@@ -120,7 +119,7 @@ namespace Luxodd.Game.Scripts.Network.CommandHandler
         public void SendSetUserDataRequestCommand(object userData, Action onSuccessCallback,
             Action<int, string> onFailureCallback)
         {
-            if (CheckConnectionStatus(onFailureCallback) == false) return;
+            //if (CheckConnectionStatus(onFailureCallback) == false) return;
             
             var commandHandler = _commandHandlers[CommandRequestType.SetUserDataRequest];
             commandHandler.SendCommand(

@@ -10,19 +10,19 @@ namespace Luxodd.Game.Scripts.Network
     public class WebSocketLibraryWrapper : MonoBehaviour
     {
         [DllImport("__Internal")]
-        private static extern void ConnectWebSocket(string url);
+        public static extern void ConnectWebSocket(string url);
 
         [DllImport("__Internal")]
-        private static extern void SendWebSocketMessage(string message);
+        public static extern void SendWebSocketMessage(string message);
         
         [DllImport("__Internal")]
-        private static extern void CloseWebSocket();
+        public static extern void CloseWebSocket();
         
         [DllImport("__Internal")]
-        private static extern void NavigateToHome();
+        public static extern void NavigateToHome();
         
         [DllImport("__Internal")]
-        private static extern void SendSessionEndMessage();
+        public static extern void SendSessionEndMessage();
 
         public ISimpleEvent<string> MessageReceivedEvent => _webSocketMessageEvent;
         public ISimpleEvent<string> WebSocketConnectionErrorEvent => _webSockedConnectionErrorEvent;
@@ -83,7 +83,7 @@ namespace Luxodd.Game.Scripts.Network
 
         public void NotifySessionEnd()
         {
-            LoggerHelper.Log($"[{GetType().Name}][{nameof(NotifySessionEnd)}] OK");
+            LoggerHelper.Log($"[{DateTime.Now}][{GetType().Name}][{nameof(NotifySessionEnd)}] OK");
 #if UNITY_WEBGL && !UNITY_EDITOR
             SendSessionEndMessage();
 #endif
@@ -91,13 +91,13 @@ namespace Luxodd.Game.Scripts.Network
 
         public void OnWebSocketOpen()
         {
-            LoggerHelper.Log($"[{GetType().Name}][{nameof(OnWebSocketOpen)}] OK");
+            LoggerHelper.Log($"[{DateTime.Now}][{GetType().Name}][{nameof(OnWebSocketOpen)}] OK");
             _webSocketOpenedEvent.Notify();
         }
 
         public void OnWebSocketMessage(string message)
         {
-            LoggerHelper.Log($"[{GetType().Name}][{nameof(OnWebSocketMessage)}] " + message);
+            LoggerHelper.Log($"[{DateTime.Now}][{GetType().Name}][{nameof(OnWebSocketMessage)}] " + message);
             _webSocketMessageEvent.Notify(message);
         }
 
@@ -117,7 +117,7 @@ namespace Luxodd.Game.Scripts.Network
         
         public void ReceiveMessageFromWebSocket(string message)
         {
-            LoggerHelper.Log("Message from WebSocket: " + message);
+            LoggerHelper.Log($"[{DateTime.Now}]Message from WebSocket: " + message);
             _webSocketMessageEvent.Notify(message);
         }
     }

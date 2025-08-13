@@ -408,6 +408,8 @@ MonoBehaviour:
   _settingsDescriptor: {fileID: 11400000, guid: 812e5b8ce30ed7243a0a011dafba8c9a, type: 2}
   _socketLibraryWrapper: {fileID: 6774978345548687132}
   _fetchUrlQueryString: {fileID: 6150350332265116626}
+  _secondsBeforeError: 6
+  _timeBeforeReconnect: 3
 --- !u!114 &6504260046023792254
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -128,8 +128,8 @@ namespace Luxodd.Game.Scripts.Network
             CoroutineManager.DelayedAction(_delayBetweenReconnections, () =>
             {
                 LoggerHelper.Log($"[{DateTime.Now}][{GetType().Name}][{nameof(OnDisconnected)}] OK, start to connect");
-                _webSocketService.ConnectToServer();
-                SwitchToState(ReconnectionState.Connecting);    
+                //_webSocketService.ConnectToServer();
+                SwitchToState(ReconnectionState.InProcess);    
             });
         }
 

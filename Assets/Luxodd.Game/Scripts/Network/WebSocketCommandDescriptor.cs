@@ -18,6 +18,7 @@ namespace Luxodd.Game.Scripts.Network
         LeaderboardRequest,
         GetUserDataRequest,
         SetUserDataRequest,
+        GetGameSessionInfoRequest
     }
 
     public enum CommandResponseType
@@ -36,6 +37,7 @@ namespace Luxodd.Game.Scripts.Network
         LeaderboardResponse,
         GetUserDataResponse,
         SetUserDataResponse,
+        GetGameSessionInfoResponse
     }
 
     public enum PayloadParameterTypes
@@ -64,6 +66,7 @@ namespace Luxodd.Game.Scripts.Network
                 CommandResponseType.LeaderboardResponse => CommandRequestType.LeaderboardRequest,
                 CommandResponseType.GetUserDataResponse => CommandRequestType.GetUserDataRequest,
                 CommandResponseType.SetUserDataResponse => CommandRequestType.SetUserDataRequest,
+                CommandResponseType.GetGameSessionInfoResponse => CommandRequestType.GetGameSessionInfoRequest,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
@@ -85,6 +88,7 @@ namespace Luxodd.Game.Scripts.Network
                 CommandRequestType.LeaderboardRequest => CommandResponseType.LeaderboardResponse,
                 CommandRequestType.GetUserDataRequest => CommandResponseType.GetUserDataResponse,
                 CommandRequestType.SetUserDataRequest => CommandResponseType.SetUserDataResponse,
+                CommandRequestType.GetGameSessionInfoRequest => CommandResponseType.GetGameSessionInfoResponse,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }

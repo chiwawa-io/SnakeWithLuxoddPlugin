@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Luxodd.Game.HelpersAndUtils.Utils;
+using Luxodd.Game.Scripts;
 using Luxodd.Game.Scripts.HelpersAndUtils;
 using Luxodd.Game.Scripts.HelpersAndUtils.Logger;
 using Luxodd.Game.Scripts.Network;
@@ -58,6 +59,8 @@ namespace Luxodd.Game.Example.Scripts
             _rawResponse.SetValue(string.Empty);
             _spaceShipName.SetValue(_spaceshipNames.First());
             _level.SetValue(_levels.First());
+            
+            _mainMenuPanelViewHandler.SetUnityPluginVersion(PluginVersion.Version);
         }
         
         private void SubscribeToEvents()
@@ -112,6 +115,7 @@ namespace Luxodd.Game.Example.Scripts
 
         private void OnConnectToServerSuccess()
         {
+            Debug.Log($"[{DateTime.Now}][{GetType().Name}][{nameof(OnConnectToServerSuccess)}] OK");
             _mainMenuPanelViewHandler.HideProcessing();
             //update status
             _isConnected.SetValue(_webSocketService.IsConnected);

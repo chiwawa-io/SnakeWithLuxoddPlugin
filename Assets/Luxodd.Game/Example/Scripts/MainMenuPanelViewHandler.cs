@@ -21,12 +21,14 @@ namespace Luxodd.Game.Example.Scripts
         [SerializeField] private TMP_Text _rawResponseText;
         [SerializeField] private TMP_Text _spaceshipNameText;
         [SerializeField] private TMP_Text _currentLevelText;
+        [SerializeField] private TMP_Text _unityPluginVersionText;
         
         private string _connectionStatusTextFormat;
         private string _userNameTextFormat;
         private string _creditsCountTextFormat;
         private string _spaceshipNameTextFormat;
         private string _currentLevelTextFormat;
+        private string _unityPluginVersionTextFormat;
 
         public void ShowProcessing()
         {
@@ -175,6 +177,11 @@ namespace Luxodd.Game.Example.Scripts
             _storageCommandViewHandler.SetLevels(levels);
         }
 
+        public void SetUnityPluginVersion(string unityPluginVersion)
+        {
+            _unityPluginVersionText.text = string.Format(_unityPluginVersionTextFormat, unityPluginVersion);
+        }
+
         private void Awake()
         {
             _connectionStatusTextFormat = _connectionStatusText.text;
@@ -182,6 +189,7 @@ namespace Luxodd.Game.Example.Scripts
             _creditsCountTextFormat = _creditsCountText.text;
             _spaceshipNameTextFormat = _spaceshipNameText.text;
             _currentLevelTextFormat = _currentLevelText.text;
+            _unityPluginVersionTextFormat = _unityPluginVersionText.text;
         }
     }
 }

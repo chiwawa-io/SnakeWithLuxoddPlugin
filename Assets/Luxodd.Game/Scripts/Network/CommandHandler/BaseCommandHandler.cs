@@ -108,6 +108,9 @@ namespace Luxodd.Game.Scripts.Network.CommandHandler
                 case CommandRequestType.GetUserDataRequest:
                     return new GetUserDataRequestCommandHandler(webSocketService);
 
+                case CommandRequestType.GetGameSessionInfoRequest:
+                    return new GetGameSessionInfoRequestCommandHandler(webSocketService);
+                
                 default:
                     throw new ArgumentOutOfRangeException(nameof(commandRequestType), commandRequestType, null);
             }
