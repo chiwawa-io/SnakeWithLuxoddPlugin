@@ -34,3 +34,6 @@ MonoBehaviour:
   - itemName: Portal
     positions:
     - {x: 0, y: 0}
+  - itemName: Invulnerability
+    positions:
+    - {x: -7, y: 8}

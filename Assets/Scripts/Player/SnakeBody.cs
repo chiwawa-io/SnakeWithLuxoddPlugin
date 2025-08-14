@@ -34,5 +34,10 @@ public class SnakeBody : MonoBehaviour
         _animator.enabled = true;
     }
 
+    public void SetBody()
+    {
+        _isHead = false;
+        _animator.enabled = false;
+    }
     
 }

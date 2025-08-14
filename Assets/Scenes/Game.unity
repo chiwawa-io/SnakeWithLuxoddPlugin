@@ -3203,6 +3203,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 88cc60a91ed18fa478a6bffb0c000f27, type: 2}
   - {fileID: 11400000, guid: 8b2125e2c323fd84b868542e09251576, type: 2}
   - {fileID: 11400000, guid: 8b974c573ca23ff4e8bdc1de1b50c575, type: 2}
+  - {fileID: 11400000, guid: cb3b0d92b04f45a4cbb29055034bd86e, type: 2}
   spawnPointMap:
   - {fileID: 11400000, guid: fd0672008538e7c44aa35507755fc974, type: 2}
   - {fileID: 11400000, guid: 7b9bddbf03173a141be9312d6b1384dc, type: 2}
@@ -3210,6 +3211,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7cac0f7f6ebf9824a8948704f8bceac1, type: 2}
   startingFoodPattern: {fileID: 11400000, guid: 70e44f1af10814c4595360e8cb79acd8, type: 2}
   speedUpPattern: {fileID: 11400000, guid: 8a7065181388c534f870d4e50776e5a3, type: 2}
+  invulnerablityPattern: {fileID: 11400000, guid: 2c1791c5fccabd1deb6e23349f6d5a21, type: 2}
   regularFoodPattern: {fileID: 11400000, guid: 70e44f1af10814c4595360e8cb79acd8, type: 2}
   portalsPattern: {fileID: 11400000, guid: 63f81764a38faaf49ac2cf75b74e9e28, type: 2}
   challengePattern:

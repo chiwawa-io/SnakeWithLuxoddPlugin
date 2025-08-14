@@ -18,6 +18,7 @@ MonoBehaviour:
   scoreValue: 0
   isObstacle: 0
   isInstaKill: 0
-  isPowerUp: 1
+  isPowerUp: 0
   effectType: 4
   effectDuration: 0
+  isPortal: 1
