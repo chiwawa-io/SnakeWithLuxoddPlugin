@@ -17,7 +17,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI errorCodeText;
     [SerializeField] private TextMeshProUGUI errorMessageText;
     [SerializeField] private GameObject errorPanelButton;
-
+    
+    [Header("SFX")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip buttonClick;
+    
     private int _errorCode;
     private string _errorMessage;
     
@@ -54,6 +58,7 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Game");
+        audioSource.PlayOneShot(buttonClick);
     }
 
     public void UpdateTimer(int timeLeft)
@@ -64,16 +69,19 @@ public class MenuManager : MonoBehaviour
     public void OpenLeaderboard()
     {
         SceneManager.LoadScene("Leaderboard");
+        audioSource.PlayOneShot(buttonClick);
     }
 
     public void OpenAchievements()
     {
         SceneManager.LoadScene("Achievements");
+        audioSource.PlayOneShot(buttonClick);
     }
 
     public void ReloadGame()
     {
         SceneManager.LoadScene("Loading");
+        audioSource.PlayOneShot(buttonClick);
     }
     
     public void Quit(bool isQuitWithError = false)
@@ -83,5 +91,6 @@ public class MenuManager : MonoBehaviour
         if (!isQuitWithError) NetworkManager.Instance.WebSocketService.BackToSystem();
         else NetworkManager.Instance.WebSocketService.BackToSystemWithError(_errorMessage, _errorCode.ToString());
         Application.Quit();
+        audioSource.PlayOneShot(buttonClick);
     }
 }

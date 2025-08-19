@@ -5,7 +5,9 @@ public class PlayerData
     public int BestScore;
     public int Level;
     public int Xp;
+    public string CurrentSkin;
     public HashSet<string> CompletedAchievementIds { get; set; } = new();
+    public HashSet<string> OwnedSkins { get; set; } = new();
 
     public PlayerData(int score, int level, int xp,  HashSet<string> completedAchievementIds)
     {

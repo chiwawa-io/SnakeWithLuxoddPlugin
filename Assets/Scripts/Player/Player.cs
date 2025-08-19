@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     [Tooltip("The simple speed Up pattern to spawn during the game")]
     [SerializeField] private SpawnPattern speedUpPattern;
     [Tooltip("The invulnerability pattern to spawn during the game")]
-    [SerializeField] private SpawnPattern invulnerablityPattern;
+    [SerializeField] private SpawnPattern invulnerabilityPattern;
     [Tooltip("The pattern for regular food spawns.")]
     [SerializeField] private SpawnPattern regularFoodPattern;
     [Tooltip("The pattern for Portal spawns.")]
@@ -70,9 +70,6 @@ public class Player : MonoBehaviour
 
     //portals
     private readonly Dictionary<Vector2Int, Vector2Int>  _portalPairs = new();
-    private readonly List<GameObject>  _portalInstances = new();
-    private readonly Queue<GameObject> _disabledSegments = new();
-    
     
     //movement input
     private Vector2 _moveInput;
@@ -82,10 +79,6 @@ public class Player : MonoBehaviour
     private Quaternion _headRotation;
     
     private bool _gameOver;
-    
-    //teleport 
-    private bool _isTeleporting;
-    private int _segmentsLeftToTeleport;
     
     //Coroutines
     private WaitForSeconds _snakeDelay;
@@ -210,44 +203,20 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        if (_isTeleporting)
-        {
-            _moveDirection = _nextMoveDirection;
-            _newHeadPos = _snakeBodyPositions[0] + _moveDirection;
-
-            _snakeBodyPositions.Insert(0, _newHeadPos);
-
-            _snakeBodyPositions.RemoveAt(_snakeBodyPositions.Count - 1);
-
-            //visuals
             
-            var segmentToDisable = _snakeBodySegments[^1];
-            _snakeBodySegments.RemoveAt(_snakeBodySegments.Count - 1);
+        _moveDirection = _nextMoveDirection;
         
-            segmentToDisable.SetActive(false);
-            _disabledSegments.Enqueue(segmentToDisable);
-        
-            var segmentToEnable = _disabledSegments.Dequeue();
-        
-            segmentToEnable.transform.position = (Vector2)_snakeBodyPositions[1]; 
-            segmentToEnable.SetActive(true);
-        
-            _snakeBodySegments.Insert(1, segmentToEnable);
-            //end visual part
-            
-            _segmentsLeftToTeleport--;
-            if (_segmentsLeftToTeleport <= 0)
-            {
-                _isTeleporting = false;
-            }
-        }
-        else
+        var currentHead = _snakeBodyPositions[0];
+
+        var basePosition = currentHead;
+
+        if (_portalPairs.TryGetValue(currentHead, out var exitPortal))
         {
-            _moveDirection = _nextMoveDirection;
-
-            _newHeadPos = _snakeBodyPositions[0] + _moveDirection;
+            basePosition = exitPortal;
         }
-
+        
+        _newHeadPos = basePosition + _moveDirection;
+        
         if (_newHeadPos.x > _xBound || _newHeadPos.x < -_xBound || _newHeadPos.y > _yBound || _newHeadPos.y < -_yBound)
         {
             LifeCheck();
@@ -271,15 +240,6 @@ public class Player : MonoBehaviour
         {
             if (activeItem.Data.isPortal)
             {
-                if (_portalPairs.TryGetValue(_newHeadPos, out var exitPortal))
-                {
-                    _isTeleporting = true;
-                    _segmentsLeftToTeleport = _snakeBodyPositions.Count;
-
-                    _snakeBodyPositions[0] = exitPortal;
-            
-                    return;
-                }
             }
             else
             {
@@ -297,9 +257,25 @@ public class Player : MonoBehaviour
     
     void UpdateVisual()
     {
+        const float teleportDistance = 3f;
+        
         for (var i = 0; i < _snakeBodySegments.Count; i++)
         {
-            _snakeBodySegments[i].transform.position = Vector2.Lerp(_snakeBodySegments[i].transform.position, _snakeBodyPositions[i], 10 * Time.deltaTime);
+            var currentVisualPos = _snakeBodySegments[i].transform.position;
+            var targetLogicalPos = _snakeBodyPositions[i];
+
+            if (Vector2.Distance(currentVisualPos, targetLogicalPos) > teleportDistance)
+            {
+                _snakeBodySegments[i].transform.position = (Vector2)targetLogicalPos;
+            }
+            else
+            {
+                _snakeBodySegments[i].transform.position = Vector2.Lerp(_snakeBodySegments[i].transform.position, _snakeBodyPositions[i], 10 * Time.deltaTime);
+            }
+
+            
+            
+            
             if (i==0) _snakeBodySegments[i].transform.rotation = Quaternion.Slerp(_snakeBodySegments[i].transform.rotation, _headRotation, 10 * Time.deltaTime);
         }
     }
@@ -430,11 +406,6 @@ public class Player : MonoBehaviour
         var instance = Instantiate(itemData.prefab, (Vector2)spawnPos, Quaternion.identity); 
         var newActiveItem = new ActiveItem(itemData, instance);
         _activeItems[spawnPos] = newActiveItem;
-        
-        if (itemData.isPortal)
-        {
-            _portalInstances.Add(instance);
-        }
     }
     
     void SpawnPattern(SpawnPattern pattern)
@@ -490,23 +461,11 @@ public class Player : MonoBehaviour
         _challengePattern = PickRandom(challengePattern);
     }
     
-    void ClearPortals()
-    {
-        foreach (var portalInstance in _portalInstances)
-        {
-            _activeItems.Remove(Vector2Int.RoundToInt(portalInstance.transform.position));
-            Destroy(portalInstance);
-        }
-        _portalInstances.Clear();
-        _portalPairs.Clear();
-    }
 
     void SpawnPortalPattern()
     {
         if (portalsPattern == null || _spawnPointMap == null) return;
     
-        ClearPortals();
-
         List<Vector2Int> allPoints = _spawnPointMap.GetPointsFor("Portal");
         if (allPoints.Count == 0) return;
 
@@ -612,12 +571,8 @@ public class Player : MonoBehaviour
     
     IEnumerator SpawnPortalCoroutine()
     {
-        yield return new WaitForSeconds(portalSpawnInterval/2);
-        while (!_gameOver)
-        {
-            SpawnPortalPattern();
-            yield return new WaitForSeconds(portalSpawnInterval);
-        }
+        yield return new WaitForSeconds(portalSpawnInterval);
+        SpawnPortalPattern();
     }
 
     IEnumerator SpawnInvulnerabilityCoroutine()
@@ -625,7 +580,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5f);
         while (!_gameOver)
         {
-            SpawnPattern(invulnerablityPattern);
+            SpawnPattern(invulnerabilityPattern);
             yield return new WaitForSeconds(25f);
         }
     }
