@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New GameItem", menuName = "Snake/Create GameItem")]
+[CreateAssetMenu(fileName = "New GameItem", menuName = "Snake/GameItem")]
 public class GameItem : ScriptableObject
 {
     [Header("Basic Data")]

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d045be3092e4604e8671fa897397d36, type: 3}
+  m_Name: Crystal
+  m_EditorClassIdentifier: Assembly-CSharp::SkinSO
+  skinName: Crystal
+  head: {fileID: 5293031974318352618, guid: 2b57e65260052a642b2643a1a7c5bc28, type: 3}
+  skinSprite: {fileID: 5293031974318352618, guid: 1ae3685fb7269bb4299975f477cd150a, type: 3}
+  skinBg: {fileID: 21300000, guid: db51520a4b82d1246b3d51f4c6829088, type: 3}
+  inGameSprite: {fileID: -2946960412791832077, guid: c59f49e2e7a04bf43a528ae093dff9a7, type: 3}
+  isUnlockedThroughLevel: 0
+  level: 0
+  costInShards: 15

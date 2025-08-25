@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 408c99c4ff864f746837465e029384a5, type: 3}
+  m_Name: HellFire
+  m_EditorClassIdentifier: Assembly-CSharp::InGameSkin
+  skinName: HellFire
+  idleState:
+  - {fileID: 8193111567512146293, guid: 012a5a1627b22e0b5b89e8e441d65a40, type: 3}
+  - {fileID: -3475092405743208583, guid: 2bafc584071f449ed919333d2ab81dcf, type: 3}
+  - {fileID: 5753327614067353709, guid: 0e777f35f93c6fd95821202dc3f1ef2a, type: 3}

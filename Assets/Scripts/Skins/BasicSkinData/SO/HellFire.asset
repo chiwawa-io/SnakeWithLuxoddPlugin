@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d045be3092e4604e8671fa897397d36, type: 3}
+  m_Name: HellFire
+  m_EditorClassIdentifier: Assembly-CSharp::SkinSO
+  skinName: HellFire
+  head: {fileID: -8903131391409372822, guid: 00cea8e22e4d4928390fd63d2de1a6a3, type: 3}
+  skinSprite: {fileID: 1098286324429101383, guid: fb406099fbb55f6a58f252741706db53, type: 3}
+  skinBg: {fileID: -3084739604066607871, guid: f40ecbb1a49e7b54f90eceb8109d4055, type: 3}
+  inGameSprite: {fileID: 5753327614067353709, guid: 0e777f35f93c6fd95821202dc3f1ef2a, type: 3}
+  isUnlockedThroughLevel: 1
+  level: 10
+  costInShards: 0

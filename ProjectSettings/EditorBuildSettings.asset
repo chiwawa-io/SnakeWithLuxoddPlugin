@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Achievements.unity
     guid: 3dcb7f5802cd012449faefa9b7aea4d9
+  - enabled: 1
+    path: Assets/Scenes/SkinSelect.unity
+    guid: 15e8c5ac8c5032d7580dac29f6561d84
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

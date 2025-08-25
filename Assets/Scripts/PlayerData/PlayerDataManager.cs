@@ -12,11 +12,14 @@ public class PlayerDataManager : MonoBehaviour
     private static int _bestScore;
     private static int _currentXp;
     private static int _currentLevel;
+    private static int _skinShards;
+    private static string _currentSkin;
     public int BestScore => _bestScore;
     public int CurrentXp => _currentXp;
     public int CurrentLevel => _currentLevel;
     
     private HashSet<string> _completedAchievementIds = new();
+    private HashSet<string> _ownedSkinIds = new();
 
     public Action<int, string> OnError;
 
@@ -31,6 +34,8 @@ public class PlayerDataManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        
+        
     }
     public void LoadData()
     {
@@ -53,11 +58,12 @@ public class PlayerDataManager : MonoBehaviour
 
     private void SaveData()
     {
-        PlayerData newPlayerData = new PlayerData(_bestScore, _currentLevel, _currentXp, _completedAchievementIds);
+        PlayerData newPlayerData = new PlayerData(_bestScore, _currentLevel, _currentXp, _completedAchievementIds,  _ownedSkinIds, _currentSkin, _skinShards);
             
         string json = JsonConvert.SerializeObject(newPlayerData);
             
-        NetworkManager.Instance.WebSocketCommandHandler.SendSetUserDataRequestCommand(json, OnDataSaveSuccess, OnDataSaveError);    }
+        NetworkManager.Instance.WebSocketCommandHandler.SendSetUserDataRequestCommand(json, OnDataSaveSuccess, OnDataSaveError);    
+    }
 
     public void AddExperience(int experience)
     {
@@ -66,6 +72,9 @@ public class PlayerDataManager : MonoBehaviour
         {
             _currentXp -= 1000;
             _currentLevel++;
+            
+            if (_currentLevel>5) BuySkin("HellFire");
+            if (_currentLevel > 10) BuySkin("AtomicBreak");
         }
     }
 
@@ -73,14 +82,36 @@ public class PlayerDataManager : MonoBehaviour
     {
         return _completedAchievementIds.Contains(achievementId);
     }
+    public bool IsSkinOwned(string achievementId)
+    {
+        return _ownedSkinIds.Contains(achievementId);
+    }
 
     public void CompleteAchievement(string achievementId)
     {
         if (_completedAchievementIds.Add(achievementId))
         {
+            _skinShards += 5;
             SaveData();
         }
     }
+    public void BuySkin(string id)
+    {
+        if (_ownedSkinIds.Add(id))
+        {
+            SaveData();
+        }
+    }
+
+    public void SetSkin(string skin)
+    {
+        _currentSkin = skin;
+        SaveData();
+    }
+
+    public string GetCurrentSkin() => _currentSkin;
+    public int GetShardsNum() => _skinShards;
+    public void Buy(int cost) => _skinShards -= cost;
 
     void OnDataSaveSuccess () {}
 
@@ -95,6 +126,7 @@ public class PlayerDataManager : MonoBehaviour
             _bestScore = 0;
             _currentXp = 0;
             _currentLevel = 0;
+            _currentSkin = "Default";
         }
         else
         {
@@ -103,6 +135,13 @@ public class PlayerDataManager : MonoBehaviour
             _currentLevel =  loadedPlayerData.Level;
             _currentXp = loadedPlayerData.Xp;
             _completedAchievementIds = loadedPlayerData.CompletedAchievementIds ?? new HashSet<string>();
+            _ownedSkinIds = loadedPlayerData.OwnedSkins ?? new HashSet<string>();
+            _ownedSkinIds.Add("Default");
+            _currentSkin = loadedPlayerData.CurrentSkin ??  "Default";
+            _skinShards = loadedPlayerData.SkinShards;
+            
+            if (_currentLevel>5) BuySkin("HellFire");
+            if (_currentLevel > 10) BuySkin("AtomicBreak");
         }
     }
 

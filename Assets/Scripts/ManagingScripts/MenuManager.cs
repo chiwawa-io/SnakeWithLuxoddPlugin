@@ -83,7 +83,13 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("Loading");
         audioSource.PlayOneShot(buttonClick);
     }
-    
+
+    public void LoadCustomization()
+    {
+        SceneManager.LoadScene("SkinSelect");
+        audioSource.PlayOneShot(buttonClick);
+    }
+
     public void Quit(bool isQuitWithError = false)
     {
         NetworkManager.Instance.HealthStatusCheckService.Deactivate();

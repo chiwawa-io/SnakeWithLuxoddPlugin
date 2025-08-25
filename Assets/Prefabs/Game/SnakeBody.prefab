@@ -53,6 +53,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -74,6 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 9
@@ -112,7 +115,8 @@ GameObject:
   - component: {fileID: 450736417280208080}
   - component: {fileID: 8821140897506505943}
   - component: {fileID: 7022551364532705936}
-  - component: {fileID: 4980022476497209138}
+  - component: {fileID: -1790124518258828835}
+  - component: {fileID: -1259361668130818703}
   m_Layer: 0
   m_Name: SnakeBody
   m_TagString: Player
@@ -156,6 +160,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -177,6 +183,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
@@ -204,7 +211,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blowPrefab: {fileID: 626694317756290860, guid: 2a0dff17e0c9bd64e881213b87ce6b9c, type: 3}
---- !u!95 &4980022476497209138
+--- !u!114 &-1790124518258828835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103579233503689171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f3c97eb6ff2c6d48ae4b0f03a0b250d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SnakeAnimator
+  skinSprites:
+  - {fileID: 11400000, guid: b0f1c12d2707a534aaf7bb924d4e4ffd, type: 2}
+  - {fileID: 11400000, guid: a1a4afd759c1b0a408e47897b050a823, type: 2}
+  - {fileID: 11400000, guid: b9ef3317aef7af54697e9b46da31b394, type: 2}
+  - {fileID: 11400000, guid: 3cebfca85be33d1408cd14ed0c240bf4, type: 2}
+  spriteRenderer: {fileID: 8821140897506505943}
+  animator: {fileID: -1259361668130818703}
+--- !u!95 &-1259361668130818703
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0

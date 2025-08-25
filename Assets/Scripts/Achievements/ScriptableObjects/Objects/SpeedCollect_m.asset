@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SpeedCollect_m
   m_EditorClassIdentifier: 
   id: SpeedC_m
-  displayName: Runner 1
+  displayName: Runner
   description: Collect three speed ups in a single game

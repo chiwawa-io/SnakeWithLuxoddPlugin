@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxHp;
     [SerializeField] private Vector2 gridSize;
     [SerializeField] private GameObject snakeBodyPrefab;
+    [SerializeField] private List<SkinSO> skinsList = new(); 
 
     [Header("Item Data")] 
     [SerializeField] private List<GameItem> itemTypes;
@@ -59,6 +60,8 @@ public class Player : MonoBehaviour
     #endregion
     
     #region State Variables
+    //Skin
+    private Dictionary<string, Sprite> skins = new(); 
     
     //spawn
     private readonly Dictionary<Vector2Int, ActiveItem> _activeItems =  new();
@@ -114,6 +117,7 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         ItemLifeSpan.OnItemDestroyed += OnItemDestroyed;
+        SortSkinsToDictionary();
     }
 
     void Start()
@@ -306,7 +310,9 @@ public class Player : MonoBehaviour
         if (data.isCollectible)
         {
             _gemsCollected++;
-            if (_gemsCollected > 15) OnAchieved?.Invoke("FoodC_m");
+            if (_gemsCollected > 40) OnAchieved?.Invoke("FoodC_xx");
+            else if (_gemsCollected > 25) OnAchieved?.Invoke("FoodC_x");
+            else if (_gemsCollected > 15) OnAchieved?.Invoke("FoodC_m");
             audioSource.PlayOneShot(foodCollect);
             
             UpdateScore?.Invoke(data.scoreValue * _snakeBodySegments.Count, item.Instance.transform.position);
@@ -334,6 +340,7 @@ public class Player : MonoBehaviour
                 {
                     OnHit(0);
                     audioSource.PlayOneShot(explode);
+                    OnAchieved?.Invoke("InstaDie");
                 }
                 else
                 {
@@ -364,7 +371,10 @@ public class Player : MonoBehaviour
             {
                 audioSource.PlayOneShot(speedUp);
                 _speedUpCollected++;
-                if (_speedUpCollected > 3) OnAchieved?.Invoke("SpeedC_m");
+                
+                if (_speedUpCollected > 40) OnAchieved?.Invoke("SpeedC_m");
+                else if (_speedUpCollected > 25) OnAchieved?.Invoke("SpeedC_m");
+                else if (_speedUpCollected > 3) OnAchieved?.Invoke("SpeedC_m");
             }
         }
         
@@ -503,13 +513,27 @@ public class Player : MonoBehaviour
         }
         return true;
     }
-    
+
+    void SortSkinsToDictionary()
+    {
+        foreach (var i in skinsList)
+        {
+            skins.Add(i.skinName, i.inGameSprite);
+        }
+    }
+
     void CreateSnakeBodySegments(Vector2Int pos, bool isHead = false)
     {
         var position = new Vector3(pos.x, pos.y, 0);
         var newSegment = Instantiate(snakeBodyPrefab, position, Quaternion.identity);
+        newSegment.GetComponent<SpriteRenderer>().sprite = skins[PlayerDataManager.Instance.GetCurrentSkin()];
         _snakeBodySegments.Add(newSegment);
-        if (isHead) newSegment.GetComponent<SnakeBody>().SetHead();
+        if (isHead) newSegment.GetComponent<SnakeAnimator>().SetHead();
+        
+        
+        if (_snakeBodySegments.Count > 60) OnAchieved?.Invoke("Size_xxl");
+        else if (_snakeBodySegments.Count > 40) OnAchieved?.Invoke("Size_xx");
+        else if (_snakeBodySegments.Count > 25) OnAchieved?.Invoke("Size_x");
     }
 
     void ApplyPowerUps(PowerUpEffectType effectType, float duration)

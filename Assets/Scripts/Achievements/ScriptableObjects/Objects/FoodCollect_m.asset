@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: FoodCollect_m
   m_EditorClassIdentifier: 
   id: FoodC_m
-  displayName: Gem Hunter 1
-  description: Eat 15 gems in a single game
+  displayName: Gem Hunter
+  description: Eat 3 gems in a single game
